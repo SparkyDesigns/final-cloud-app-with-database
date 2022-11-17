@@ -112,7 +112,6 @@ class Question(models.Model):
     question_grade = models.IntegerField(default=0)
     course = models.ManyToManyField(Course)
 
-
     # <HINT> A sample model method to calculate if learner get the score of the question
     def is_get_score(self, selected_ids):
         all_answers = self.choice_set.filter(is_correct=True).count()
@@ -122,6 +121,9 @@ class Question(models.Model):
         else:
             return False
 
+    def __str__(self):
+        return "Question: " + self.questionContent
+
 
 #  <HINT> Create a Choice Model with:
     # Used to persist choice content for a question
@@ -130,7 +132,7 @@ class Question(models.Model):
     # Indicate if this choice of the question is a correct one or not
     # Other fields and methods you would like to design
 class Choice(models.Model):
-    question = models.ForeignKey(Question , on_delete=models.CASCADE)
+    question = models.ForeignKey(Question,on_delete=models.CASCADE,default="")
     choice_text = models.TextField()
     is_correct = models.BooleanField(default=False)
 
